@@ -1,5 +1,4 @@
-total<- list.files("/Library/WebServer/Documents/JBrowse-1.11.6/test/raw/human/")
-total <- list.files()
+total <- list.files(".. Your file directory containing bigwig/BAM files..")
 
 conf(total, "human")
 conf <- function(files, directory) {
