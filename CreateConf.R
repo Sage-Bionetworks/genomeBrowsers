@@ -1,7 +1,7 @@
 total <- list.files(".. Your file directory containing bigwig/BAM files..")
 
-conf(total, "human")
-conf <- function(files, directory) {
+config(total, "human")
+config <- function(files, directory) {
   conf <- file("tracks.conf")
   ##Don't want the files with .bai in it
   files <- files[!files%in%".bai"]
