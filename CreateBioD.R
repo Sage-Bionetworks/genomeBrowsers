@@ -6,7 +6,7 @@ documentHead <- " <!DOCTYPE html>
   <head>
   </head>
   <body>
-  
+
   
   <div id=\"title\"> <h1> Genome Browser </h1> 
   </div>
