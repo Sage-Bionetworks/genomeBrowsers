@@ -69,4 +69,3 @@ documentMid<- formMid("http://localhost/",files)
 biodalliance <- file("biodalliance.html")
 writeLines(c(documentHead,documentMid,documentEnd),biodalliance)
 close(biodalliance)
-s
