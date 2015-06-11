@@ -1,15 +1,26 @@
 library(tools)
-file_ext(files[1])
+
 total <- list.files(".. Your file directory containing bigwig/BAM files..")
-files <- list.files("/Library/WebServer/Documents/")
 config(total, "human")
-files
-tfiles
+total<- list.files()
+
+
 config <- function(files, directory) {
   conf <- file("tracks.conf")
   ##Don't want the files with .bai in it
   tfiles <- files[file_ext(files) %in% c("bw","bam")]
   #sapply through files, -> if bigwig, then do formatting for bigwig files (ifelse) else do BAM
+  #'
+  #'@track Unique trackname
+  #'@class choose bigwig/BAM configuration
+  #'@plot bigwig - plots XY/ Density, BAM - plots alignment2
+  #'@uniq bigwig - autoscaling, BAM - Attach BAI file
+  #'@cat Put into category
+  #'@key Name of track
+  #'
+  if (length(tfiles) ==0) {
+    stop("Files passed in are neither BAM or bigwig format")
+  } 
   lines <- sapply(tfiles, function(i) { 
     track <- paste("[tracks.", which(i==files), "]",sep="")
     class <- paste("storeClass = JBrowse/Store/SeqFeature/", ifelse(grepl("bw",i),"BigWig","BAM"),sep="")
