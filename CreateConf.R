@@ -1,9 +1,8 @@
 library(tools)
-
 total <- list.files(".. Your file directory containing bigwig/BAM files..")
+##config((list of files here),(type of file-belongs to humans/mouse/etc...))
 config(total, "human")
 total<- list.files()
-
 
 config <- function(files, directory) {
   conf <- file("tracks.conf")
