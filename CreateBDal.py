@@ -2,6 +2,10 @@ import string
 import os
 import argparse
 
+#x="ls"
+#y=`eval $x`
+#echo $y <- all the files in the folder
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-cu","--controlURL",action="store",help="Takes in list of control URL")
@@ -9,7 +13,7 @@ parser.add_argument("-cau","--caseURL",action="store",help="Takes in list of cas
 parser.add_argument("-cf","--controlFile",action="store",help="Takes in list of control files")
 parser.add_argument("-caf","--caseFile",action="store",help="Takes in list of case files")
 parser.add_argument("-g","--genome",action = "store",default = "human",help= "Input (human/mouse) hg19 or mm10 genomes")
-parser.add_argument("-url","--url",action="store",default = "http://localhost",help = "URL of files")
+parser.add_argument("-url","--url",action="store",default="",help = "URL of files")
 args = parser.parse_args()
 
 cURL =  args.controlURL
@@ -55,7 +59,7 @@ def create_track(allFiles,URL,f,case):
 									COLOR1:'red',
 									COLOR2:'red',
 									COLOR3:'red',
-									HEIGHT:30}}]}"""
+									HEIGHT:30}}]"""
 	else:
 		subfolder = "control"
 		style = ""
@@ -68,12 +72,12 @@ def create_track(allFiles,URL,f,case):
 				track = """
 					,{name: '%s',
 					collapseSuperGroups:true,
-					bwgURI: '%s/%s/%s'%s}""" % (each,URL,subfolder,each,style)
+					bwgURI: '%s%s/%s'%s}""" % (each,URL,subfolder,each,style)
 				f.write(track)
 			elif "vcf.gz" in each and ".tbi" not in each:
 				track = """
 					,{name: '%s',
-					uri: '%s/%s/%s',
+					uri: '%s%s/%s',
 					tier_type: 'tabix',
 					payload: 'vcf'} """ % (each, URL, subfolder,each)
 				f.write(track)
@@ -85,7 +89,7 @@ def create_track(allFiles,URL,f,case):
 
 
 #files=next(os.walk("/Library/WebServer/Documents/"))[2]
-def createBioHTML(caseURL,controlURL,caseFile,controlFile, URL="http://localhost", folder="human"):
+def createBioHTML(caseURL,controlURL,caseFile,controlFile, URL="", folder="human"):
 	f = open('test.html','w')
 	documentHead = """ 
 <!DOCTYPE html>
@@ -99,7 +103,7 @@ def createBioHTML(caseURL,controlURL,caseFile,controlFile, URL="http://localhost
 		<div id="title"> <h1> Genome Browser </h1> 
 	</div>
 		
-	<script language="javascript" src="%s/dalliance-compiled.js"></script> 
+	<script language="javascript" src="%sdalliance-compiled.js"></script> 
 	<script language="javascript">
 		new Browser({ """% URL
 
@@ -136,16 +140,16 @@ def createBioHTML(caseURL,controlURL,caseFile,controlFile, URL="http://localhost
 	source = """
 			sources: 
 				[{name: 'Genome',
-				twoBitURI: 'URL/directory/%s',
+				twoBitURI: 'URLdirectory/%s',
 				tier_type: 'sequence',
 				provides_entrypoints: true,
 				pinned: true}, 
 
 				{name: 'GENCODE',
-				bwgURI: 'URL/directory/%s',
-				stylesheet_uri: 'URL/directory/gencode.xml',	
+				bwgURI: 'URLdirectory/%s',
+				stylesheet_uri: 'URLdirectory/gencode.xml',	
 				collapseSuperGroups: true, 
-				trixURI: 'URL/directory/%s',
+				trixURI: 'URLdirectory/%s',
 				pinned:true}""" % (bit, bb, trix)
 	newSource = string.replace(source,"URL",URL)
 	newSource = string.replace(newSource,"directory",folder)
