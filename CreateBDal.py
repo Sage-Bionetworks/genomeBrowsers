@@ -5,7 +5,9 @@ import argparse
 #x="ls"
 #y=`eval $x`
 #echo $y <- all the files in the folder
-
+#sed 'Nd' file > newfile <- where N is the line in the file
+#sort -k1,1 -k2,2n H9.102.2.5__exon.bed > sorted.bed <- sorting bed files (All bed/VCF files have to be sorted before indexing) 
+#chromosome and start position matter
 parser = argparse.ArgumentParser()
 
 parser.add_argument("-cu","--controlURL",action="store",help="Takes in list of control URL")
@@ -53,16 +55,10 @@ urls = args.url
 def create_track(allFiles,URL,f,case):
 	if case: #If case files, data should be in case folder
 		subfolder = "case"
-		style = """
-					,style: [{type : 'default',
-							style: {glyph: 'HISTOGRAM',
-									COLOR1:'red',
-									COLOR2:'red',
-									COLOR3:'red',
-									HEIGHT:30}}]"""
+		color = "red"
 	else:
 		subfolder = "control"
-		style = ""
+		color = "grey"
 
 	if allFiles:
 		allFiles = allFiles.split()
@@ -72,17 +68,32 @@ def create_track(allFiles,URL,f,case):
 				track = """
 					,{name: '%s',
 					collapseSuperGroups:true,
-					bwgURI: '%s%s/%s'%s}""" % (each,URL,subfolder,each,style)
+					bwgURI: '%s%s/%s',
+					style: [{type : 'default',
+							style: {glyph: 'HISTOGRAM',
+									COLOR1:'%s',
+									COLOR2:'%s',
+									COLOR3:'%s',
+									HEIGHT:30}}]}""" % (each,URL,subfolder,each,color,color,color)
 				f.write(track)
 			elif "vcf.gz" in each and ".tbi" not in each:
 				track = """
 					,{name: '%s',
 					uri: '%s%s/%s',
 					tier_type: 'tabix',
-					payload: 'vcf'} """ % (each, URL, subfolder,each)
+					payload: 'vcf',
+					subtierMax:5} """ % (each, URL, subfolder,each)
+				f.write(track)
+			elif "bed.gz" in each and ".tbi" not in each:
+				track = """
+					,{name: '%s',
+					uri: '%s%s/%s',
+					tier_type: 'tabix',
+					payload: 'bed',
+					subtierMax:5} """ % (each, URL, subfolder,each)
 				f.write(track)
 			else:
-				print("%s is not a Bigwig/VCF File"%each)
+				print("%s is not a Bigwig/VCF/Bed File"%each)
 
 
 
