@@ -80,6 +80,7 @@ def create_track(allFiles,URL,f,case):
 				track = """
 					,{name: '%s',
 					uri: '%s%s/%s',
+					#indexURI:,
 					tier_type: 'tabix',
 					payload: 'vcf',
 					subtierMax:5} """ % (each, URL, subfolder,each)
@@ -88,6 +89,7 @@ def create_track(allFiles,URL,f,case):
 				track = """
 					,{name: '%s',
 					uri: '%s%s/%s',
+					#indexURI:,
 					tier_type: 'tabix',
 					payload: 'bed',
 					subtierMax:5} """ % (each, URL, subfolder,each)
