@@ -60,7 +60,7 @@ def createRefGenome(directory):
 		if ".fa" in each: # This gives the DNA seqs
 			os.system("perl %s/bin/prepare-refseqs.pl --fasta %s --out %s" % (jbrowse,each,os.path.join(jbrowse,output))) 
 		elif ".bed" in each: #This gives the genes (this bed file is already formatted)
-			os.system("""perl %s/bin/flatfile-to-json.pl --bed %s --trackType CanvasFeatures --trackLabel human_genes --config '{"maxFeatureScreenDensity":20}' --clientConfig '{"strandArrow": false,"color":"cornflowerblue"}' --out %s""" %(jbrowse,each,os.path.join(jbrowse,output)))
+			os.system("""perl %s/bin/flatfile-to-json.pl --bed %s --trackType CanvasFeatures --trackLabel human_genes --config '{"maxFeatureScreenDensity":20,"maxHeight":300}' --clientConfig '{"strandArrow": false,"color":"cornflowerblue"}' --out %s""" %(jbrowse,each,os.path.join(jbrowse,output)))
 	os.system("perl %s/bin/generate-names.pl -v --out %s"%(jbrowse,os.path.join(jbrowse,output))) 
 
 ##If the reference files aren't already local, then have to get the reference files
