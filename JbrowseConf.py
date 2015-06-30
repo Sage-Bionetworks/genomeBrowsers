@@ -27,6 +27,7 @@ parser.add_argument("-f","--files",action="store",help="Takes in list of case fi
 parser.add_argument("-url","--url",action="store",default="",help = "URL of files")
 parser.add_argument("-ref","--reference", action="store",default="Reference",help= "Folder of DNA reference files (fasta/(bed file of all genes))")
 parser.add_argument("-N","--needRef",action='store_true',help="Need reference genome?")
+parser.add_argument("-A","--add",action='store_true',help="Append onto existing conf?")
 
 args = parser.parse_args()
 #Required
@@ -38,6 +39,7 @@ files =  args.files
 urls = args.url
 ref = args.reference
 needRef = args.needRef
+add = args.add
 
 #This is where the configuration file goes
 output = os.path.join(project,"json",genome)##for right now <- genome is the subfolder name
@@ -153,14 +155,14 @@ key = %s\n"""%(count,directory,data,each,category,meta_type,datatype,each)
 			##Write each line of the metadata.csv
 			writer.writerow({'label':count, 'category':category,'meta_type':meta_type,'datatype':datatype,'key':each})
 			count+=1
-		elif ".bed" in each:
-			os.system("perl ../../../bin/flatfile-to-json.pl --bed %s --trackLabel %s --trackType CanvasFeatures" % (each,each))
+		#elif ".bed" in each and ".gz" not in each:
+		#	os.system("perl %s/bin/flatfile-to-json.pl --bed %s --trackLabel %s --trackType CanvasFeatures" % (jbrowse,each,each))
 		else:
-			print("%s is not a Bigwig/VCF File"%each)
+			print("%s is not a Bigwig/VCF/BAM File"%each)
 	metaData.close()
 	f.close()
-	url = "http://localhost/JBrowse-1.11.6/?data=%s/json/%s" %(project,genome)
-	webbrowser.open(url,new=2)
+	#url = "http://localhost/JBrowse-1.11.6/?data=%s/json/%s" %(project,genome)
+	#webbrowser.open(url,new=2)
 
 dataFiles = os.listdir(os.path.join(jbrowse,rawfiles))
-createJbrowse(dataFiles,data=genome)
+createJbrowse(dataFiles,data=genome,append =add)
