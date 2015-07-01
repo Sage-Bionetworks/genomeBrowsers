@@ -25,9 +25,9 @@
   
   -C, --create:          Create Folder structure for project
 
-#####Example: For fresh jbrowse:
+#####Example: 
 
-  python [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
+For fresh jbrowse: python JbrowseConf.py [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
 
 ##Biodalliance
 ###CreateBDal.py
