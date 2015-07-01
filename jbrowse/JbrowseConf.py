@@ -17,44 +17,60 @@ parser = argparse.ArgumentParser()
 #positional arguments
 parser.add_argument("Project", metavar='Project',type=str, help='Project name')
 parser.add_argument("Jbrowse", metavar='Jbrowse directory', type=str, help= "Where Jbrowse-1.11.6 is installed (path)")
-parser.add_argument("genome",metavar='Genome',type=str,help="Input (human/mouse) - hg19 and mm10 supported")
+parser.add_argument("Genome",metavar='Genome',type=str,help="Input (human/mouse) - hg19 and mm10 supported")
+parser.add_argument("FolderPath",metavar='Folder Path',type=str,help="Full path of folder with datafiles")
+
 
 #Optional arguments
 #parser.add_argument("-cu","--controlURL",action="store",help="Takes in list of control URL")
 #parser.add_argument("-cau","--caseURL",action="store",help="Takes in list of case URL")
 #parser.add_argument("-cf","--controlFile",action="store",help="Takes in list of control files")
-parser.add_argument("-f","--files",action="store",help="Takes in list of case files")
 parser.add_argument("-url","--url",action="store",default="",help = "URL of files")
 parser.add_argument("-ref","--reference", action="store",default="Reference",help= "Folder of DNA reference files (fasta/(bed file of all genes))")
 parser.add_argument("-N","--needRef",action='store_true',help="Need reference genome?")
 parser.add_argument("-A","--add",action='store_true',help="Append onto existing conf?")
-
+parser.add_argument("-D","--download",action='store_true',help="Download genome fasta files")
+parser.add_argument("-C","--create", action="stroe_true",help="Create Folder structure for project")
 args = parser.parse_args()
 #Required
-genome = args.genome
+genome = args.Genome
 jbrowse = args.Jbrowse
 project = args.Project
+folderpath = args.FolderPath
 #Optional
 files =  args.files
 urls = args.url
 ref = args.reference
 needRef = args.needRef
 add = args.add
+download = args.download
+create = args.create
+
+if create:
+	os.mkdir(os.path.join(jbrowse,project))
+	os.mkdir(os.path.join(jbrowse,project,"json"))
+	os.mkdir(os.path.join(jbrowse,project,"raw"))
+	os.mkdir(os.path.join(jbrowse,project,"json",genome))
+	os.mkdir(os.path.join(jbrowse,project,"raw",genome))
 
 #This is where the configuration file goes
 output = os.path.join(project,"json",genome)##for right now <- genome is the subfolder name
 rawfiles = os.path.join(project,"raw",genome)
 
+os.system("ln -s %s %s" %(folderpath,os.path.join(project,"raw")))
+os.system("mv %s %s"%(os.path.join(project,"raw","*"),rawfiles))
+
 def createRefGenome(directory):
 	##If the person doesn't have the fasta files, then download them from synapse
-	if not ref:
-		directory = os.path.join(directory,"Reference")
+	if download:
+		os.mkdir(os.path.join(jbrowse,"Reference"))
+		os.mkdir(os.path.join(jbrowse,"Reference",genome))
 		if genome=="human":
 			temp = syn.query('SELECT id, name FROM entity WHERE parentId == "syn4557835"')
 		else:
 			temp = syn.query('SELECT id, name FROM entity WHERE parentId == "syn4557836"')
 		for each in temp['entity.id']:
-			syn.get(temp,downloadLocation = "%s/Reference/%s" %(jbrowse,genome))
+			syn.get(temp,downloadLocation = "%s" %(directory)
 		
 	#Gives list of filenames but with the path appended to it
 	filelist = [os.path.join(directory,filenames) for filenames in os.listdir(directory)]
