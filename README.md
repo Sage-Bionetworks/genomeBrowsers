@@ -1,6 +1,9 @@
-#JbrowseConf.py
+#Genome Browsers
 
-##Required
+##Jbrowse
+###JbrowseConf.py
+
+#####Required
 
   Project -              Project name
 
@@ -10,7 +13,7 @@
 
   Folder Path -          Full path of folder with datafiles
 
-##optional arguments:
+#####optional arguments:
 
   -h, --help:            show this help message and exit
 
@@ -22,6 +25,22 @@
   
   -C, --create:          Create Folder structure for project
 
-  For fresh jbrowse:
+ #####Example: For fresh jbrowse:
 
   python [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
+
+##Biodalliance
+###CreateBDal.py
+
+  -h, --help            show this help message and exit
+
+  -cu CONTROLURL, --controlURL CONTROLURL: Takes in list of control URL
+  
+  -cau CASEURL, --caseURL CASEURL: Takes in list of case URL
+  
+  -cf CONTROLFILE, --controlFile CONTROLFILE: Takes in list of control files
+  
+  -caf CASEFILE, --caseFile CASEFILE: Takes in list of case files
+  
+  -g GENOME, --genome GENOME: Input (human/mouse) hg19 or mm10 genomes
+
