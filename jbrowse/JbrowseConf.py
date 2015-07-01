@@ -25,7 +25,6 @@ parser.add_argument("FolderPath",metavar='Folder Path',type=str,help="Full path 
 #parser.add_argument("-cu","--controlURL",action="store",help="Takes in list of control URL")
 #parser.add_argument("-cau","--caseURL",action="store",help="Takes in list of case URL")
 #parser.add_argument("-cf","--controlFile",action="store",help="Takes in list of control files")
-parser.add_argument("-url","--url",action="store",default="",help = "URL of files")
 parser.add_argument("-ref","--reference", action="store",default="Reference",help= "Folder of DNA reference files (fasta/(bed file of all genes))")
 parser.add_argument("-N","--needRef",action='store_true',help="Need reference genome?")
 parser.add_argument("-A","--add",action='store_true',help="Append onto existing conf?")
