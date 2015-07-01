@@ -20,9 +20,8 @@ parser.add_argument("Jbrowse", metavar='Jbrowse directory', type=str, help= "Whe
 parser.add_argument("Genome",metavar='Genome',type=str,help="Input (human/mouse) - hg19 and mm10 supported")
 parser.add_argument("FolderPath",metavar='Folder Path',type=str,help="Full path of folder with datafiles")
 
-
 #Optional arguments
-parser.add_argument("-ref","--reference", action="store",default="Reference",help= "Folder of DNA reference files (fasta/(bed file of all genes))")
+#parser.add_argument("-ref","--reference", action="store",default="Reference",help= "Folder of DNA reference files (fasta/(bed file of all genes))")
 parser.add_argument("-N","--needRef",action='store_true',help="Need reference genome?")
 parser.add_argument("-A","--add",action='store_true',help="Append onto existing conf?")
 parser.add_argument("-D","--download",action='store_true',help="Download genome fasta files")
