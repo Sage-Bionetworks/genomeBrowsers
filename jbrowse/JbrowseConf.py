@@ -30,7 +30,7 @@ parser.add_argument("-ref","--reference", action="store",default="Reference",hel
 parser.add_argument("-N","--needRef",action='store_true',help="Need reference genome?")
 parser.add_argument("-A","--add",action='store_true',help="Append onto existing conf?")
 parser.add_argument("-D","--download",action='store_true',help="Download genome fasta files")
-parser.add_argument("-C","--create", action="stroe_true",help="Create Folder structure for project")
+parser.add_argument("-C","--create", action="store_true",help="Create Folder structure for project")
 args = parser.parse_args()
 #Required
 genome = args.Genome
@@ -70,7 +70,7 @@ def createRefGenome(directory):
 		else:
 			temp = syn.query('SELECT id, name FROM entity WHERE parentId == "syn4557836"')
 		for each in temp['entity.id']:
-			syn.get(temp,downloadLocation = "%s" %(directory)
+			syn.get(temp,downloadLocation = "%s" %(directory))
 		
 	#Gives list of filenames but with the path appended to it
 	filelist = [os.path.join(directory,filenames) for filenames in os.listdir(directory)]
