@@ -26,4 +26,4 @@
 
   For fresh jbrowse:
 
-  python [projectname] [jbrowse folder path] [human/mouse] [path of folder with data] -D -C -N
+  python [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
