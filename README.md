@@ -14,11 +14,14 @@
 
   -h, --help:            show this help message and exit
 
-
   -ref REFERENCE, --reference REFERENCE: Folder of DNA reference files (fasta/(bed file of all genes))
+
   -N, --needRef:         Need reference genome?
+  
   -A, --add:           Append onto existing conf?
+  
   -D, --download:        Download genome fasta files
+  
   -C, --create:          Create Folder structure for project
 
   For fresh jbrowse:
