@@ -1,6 +1,6 @@
 #JbrowseConf.py
 
-positional arguments:
+positional arguments:\n
   Project               Project name
   Jbrowse directory     Where Jbrowse-1.11.6 is installed (path)
   Genome                Input (human/mouse) - hg19 and mm10 supported
