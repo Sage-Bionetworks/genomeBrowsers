@@ -15,7 +15,7 @@ parser.add_argument("-cau","--caseURL",action="store",help="Takes in list of cas
 parser.add_argument("-cf","--controlFile",action="store",help="Takes in list of control files")
 parser.add_argument("-caf","--caseFile",action="store",help="Takes in list of case files")
 parser.add_argument("-g","--genome",action = "store",default = "human",help= "Input (human/mouse) hg19 or mm10 genomes")
-parser.add_argument("-url","--url",action="store",default="",help = "URL of files")
+parser.add_argument("-url","--url",action="store",default="",help = "URL of reference files")
 args = parser.parse_args()
 
 cURL =  args.controlURL
@@ -52,7 +52,7 @@ urls = args.url
 
 
 
-def create_track(allFiles,URL,f,case):
+def create_track(allFiles,f,case,link):
 	if case: #If case files, data should be in case folder
 		subfolder = "case"
 		color = "red"
@@ -63,39 +63,41 @@ def create_track(allFiles,URL,f,case):
 	if allFiles:
 		allFiles = allFiles.split()
 		for each in allFiles:
+			fileurl = link and each or os.path.join(subfolder,each)
+			name = link and each.split("/")[-1] or each
 			if "bw" in each:
 				##If it is a case file, then the histograms should be red
 				track = """
 					,{name: '%s',
 					collapseSuperGroups:true,
-					bwgURI: '%s%s/%s',
+					bwgURI: '%s',
 					style: [{type : 'default',
 							style: {glyph: 'HISTOGRAM',
 									COLOR1:'%s',
 									COLOR2:'%s',
 									COLOR3:'%s',
-									HEIGHT:30}}]}""" % (each,URL,subfolder,each,color,color,color)
+									HEIGHT:30}}]}""" % (name,fileurl,color,color,color)
 				f.write(track)
 			elif "vcf.gz" in each and ".tbi" not in each:
 				track = """
 					,{name: '%s',
-					uri: '%s%s/%s',
+					uri: '%s',
 					#indexURI:,
 					tier_type: 'tabix',
 					payload: 'vcf',
-					subtierMax:5} """ % (each, URL, subfolder,each)
+					subtierMax:5} """ % (name, fileurl)
 				f.write(track)
 			elif "bed.gz" in each and ".tbi" not in each:
 				track = """
 					,{name: '%s',
-					uri: '%s%s/%s',
+					uri: '%s',
 					#indexURI:,
 					tier_type: 'tabix',
 					payload: 'bed',
-					subtierMax:5} """ % (each, URL, subfolder,each)
+					subtierMax:5} """ % (name, fileurl)
 				f.write(track)
 			else:
-				print("%s is not a Bigwig/VCF/Bed File"%each)
+				print("%s is not a Bigwig/VCF/Bed File"%name)
 
 
 
@@ -172,10 +174,10 @@ def createBioHTML(caseURL,controlURL,caseFile,controlFile, URL="", folder="human
 	f.write(colors)
 	f.write(newSource)
 
-	create_track(caseURL,URL,f,True)
-	create_track(controlURL,URL,f,False)
-	create_track(caseFile,URL,f,True)
-	create_track(controlFile,URL,f,False)
+	create_track(caseURL,f,True,True)
+	create_track(controlURL,f,False,True)
+	create_track(caseFile,f,True,False)
+	create_track(controlFile,f,False,False)
 
 	documentEnd = """
 		]

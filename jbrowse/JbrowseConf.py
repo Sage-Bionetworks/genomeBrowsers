@@ -55,7 +55,7 @@ output = os.path.join(project,"json",genome)##for right now <- genome is the sub
 rawfiles = os.path.join(project,"raw",genome)
 
 os.system("ln -s %s %s" %(folderpath,os.path.join(project,"raw")))
-os.system("mv %s %s"%(os.path.join(project,"raw","*"),rawfiles))
+os.system("mv %s %s"%(os.path.join(project,"raw","*"),rawfiles)) #Temporary hack that will work for now...
 
 def createRefGenome(directory):
 	##If the person doesn't have the fasta files, then download them from synapse
