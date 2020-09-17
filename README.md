@@ -1,10 +1,11 @@
-#Genome Browsers
+# Genome Browsers
 
-##Jbrowse
-###JbrowseConf.py
+## Jbrowse
+### JbrowseConf.py
 
-#####Required
+##### Required
 
+```
   Project -              Project name
 
   Jbrowse directory-     Where Jbrowse-1.11.6 is installed (path)
@@ -13,8 +14,10 @@
 
   Folder Path -          Full path of folder with datafiles
 
-#####optional arguments:
+```
 
+##### optional arguments:
+```
   -h, --help:            show this help message and exit
 
   -N, --needRef:         Need reference genome?
@@ -24,14 +27,16 @@
   -D, --download:        Download genome fasta files
   
   -C, --create:          Create Folder structure for project
+```
+##### Example: 
 
-#####Example: 
-
-For fresh jbrowse: python JbrowseConf.py [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
-
-##Biodalliance
-###CreateBDal.py
-
+For fresh jbrowse:
+```
+python JbrowseConf.py [Project] [Jbrowse directory] [Genome] [Folder Path] -D -C -N
+```
+## Biodalliance
+### CreateBDal.py
+```
   -h, --help            show this help message and exit
 
   -cu CONTROLURL, --controlURL CONTROLURL: Takes in list of control URL
@@ -43,4 +48,4 @@ For fresh jbrowse: python JbrowseConf.py [Project] [Jbrowse directory] [Genome] 
   -caf CASEFILE, --caseFile CASEFILE: Takes in list of case files
   
   -g GENOME, --genome GENOME: Input (human/mouse) hg19 or mm10 genomes
-
+```
